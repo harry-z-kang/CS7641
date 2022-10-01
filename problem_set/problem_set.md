@@ -20,8 +20,8 @@ $$\therefore \Delta \omega_{jk}=\eta \sum_{i=1}^m\frac{d_i-h(x_i)}{h(x_i)(1-h(x_
 
 ## 2. Design a two-input perceptron that implements the boolean function $A \cdot \bar{B}$. Design a two-layer network of perceptrons that implements $A \oplus B$ (where $\oplus$ is XOR).
 
-![$A \cdot \bar{B}$](./q2_1.png)
-![$A \oplus B$](./q2_2.png)
+![$A \cdot \bar{B}$](./q2_1.png){width="50%"}
+![$A \oplus B$](./q2_2.png){width="50%"}
 
 ## 3. Derive the perceptron training rule and gradient descent training rule for a single unit with output $o$, where $o=\omega _0+\omega _1x_1+\omega _1x_1^2+...+\omega _nx_n+\omega _nx_n^2$. What are the advantages of using gradient descent training rule for training neural networks over the perceptron training rule?
 
