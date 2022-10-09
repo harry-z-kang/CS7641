@@ -155,7 +155,7 @@ Only a few of x's matter as most of the $\alpha$ in the above equation are 0.
 
 ### Kernel
 
-The $x_{i}^Tx_{j}$ from the above equation can be considered as a kernel. In fact that portion of the equation can be substituted with K(x_{i}, x_{j}) where the kernel is subject to the [Mercer Condition](https://en.wikipedia.org/wiki/Mercer%27s_theorem). Essentially it means the kernel has to be distance like.
+The $x_{i}^Tx_{j}$ from the above equation can be considered as a kernel. In fact that portion of the equation can be substituted with $K(x_{i}, x_{j})$ where the kernel is subject to the [Mercer Condition](https://en.wikipedia.org/wiki/Mercer%27s_theorem). Essentially it means the kernel has to be distance like.
 
 ## Computation Learning Theory
 
