@@ -4,32 +4,32 @@ import common_functions as cf
 
 cf.plot_increasing_problem_size(
     name="Continuous Peak",
-    problem_size_range=range(5, 125, 20),
-    max_attempts=[1000, 1000, 1000, 100],
-    max_iters=[100000, 10000, 10000, 10000],
+    problem_size_range=range(5, 126, 20),
+    max_attempts=[1000, 1000, 1000, 1000],
+    max_iters=[100000, 100000, 100000, 100000],
     mimic_pop_size=500
 )
 
 cf.plot_increasing_iterations(
     name="Continuous Peak",
-    problem_length=100,
-    max_attempts=[1000, 1000, 1000, 100],
-    max_iters=[100000, 10000, 10000, 10000],
+    problem_length=85,
+    max_attempts=[1000, 1000, 1000, 1000],
+    max_iters=[3000, 3000, 3000, 3000],
     mimic_pop_size=500
 )
 
 cf.plot_different_thresholds(
     name="Continuous Peak",
-    problem_length=40,
+    problem_length=85,
     threshold_range=[0.1, 0.3, 0.5],
-    max_attempts=[1000, 1000, 1000, 100],
-    max_iters=[100000, 10000, 10000, 10000],
+    max_attempts=[1000, 1000, 1000, 1000],
+    max_iters=[700, 700, 700, 700],
     mimic_pop_size=500
 )
 
 cf.plot_changing_hyper_parameters(
-    name="Continous Peak",
-    problem_length=40,
-    max_attempts=[1000, 1000, 1000, 100],
-    max_iters=[100000, 10000, 10000, 10000]
+    name="Continuous Peak",
+    problem_length=85,
+    max_attempts=[1000, 1000, 1000, 1000],
+    max_iters=[5000, 1500, 1000, 50]
 )

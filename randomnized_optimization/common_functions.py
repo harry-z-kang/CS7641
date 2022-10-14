@@ -14,6 +14,16 @@ class ROF(enum.Enum):
     MIMIC = 3
 
 
+def get_fitness_function(problem: str, threshold: float):
+    match problem:
+      case "Four Peaks":
+        return mlrose_hiive.FourPeaks(t_pct=threshold)
+      case "Flip Flop":
+        return mlrose_hiive.FlipFlop()
+      case "Continuous Peak":
+        return mlrose_hiive.ContinuousPeaks(t_pct=threshold)
+
+
 def plot_increasing_problem_size(
     name: str, problem_size_range: range,
     max_attempts: list[int], max_iters: list[int],
@@ -25,7 +35,7 @@ def plot_increasing_problem_size(
     for value in problem_size_range:
         print(
             f"==================== Problem Size: {value} ====================")
-        fitness = mlrose_hiive.FourPeaks(t_pct=0.1)
+        fitness = get_fitness_function(name, 0.1)
         problem = mlrose_hiive.DiscreteOpt(
             length=value, fitness_fn=fitness,
             maximize=True, max_val=2
@@ -121,7 +131,7 @@ def plot_increasing_iterations(
     max_attempts: list[int], max_iters: list[int],
     mimic_pop_size: int
 ):
-    fitness = mlrose_hiive.ContinuousPeaks(t_pct=0.1)
+    fitness = get_fitness_function(name, 0.1)
     problem = mlrose_hiive.DiscreteOpt(
         length=problem_length, fitness_fn=fitness,
         maximize=True, max_val=2
@@ -169,74 +179,11 @@ def plot_increasing_iterations(
     plt.savefig(f'images/{"_".join(name.split(" ")).lower()}_iterations.png')
 
 
-def plot_different_thresholds(
-    name: str, problem_length: int,
-    threshold_range: list[float],
-    max_attempts: list[int], max_iters: list[int],
-    mimic_pop_size: int
-):
-    fitness_curve_list = {threshold: [None, None, None, None] for threshold in threshold_range}
-
-    for index, threshold in enumerate(threshold_range):
-        fitness = mlrose_hiive.ContinuousPeaks(t_pct=threshold)
-        problem = mlrose_hiive.DiscreteOpt(
-            length=problem_length, fitness_fn=fitness,
-            maximize=True, max_val=2
-        )
-        problem.set_mimic_fast_mode(True)
-        init_state = np.random.randint(2, size=problem_length)
-
-        _, _, fitness_curve_list[threshold][ROF.SA.value] = mlrose_hiive.simulated_annealing(
-            problem, schedule=mlrose_hiive.ExpDecay(),
-            max_attempts=max_attempts[ROF.SA.value],
-            max_iters=max_iters[ROF.SA.value],
-            init_state=init_state, curve=True
-        )
-        _, _, fitness_curve_list[threshold][ROF.RHC.value] = mlrose_hiive.random_hill_climb(
-            problem,
-            max_attempts=max_attempts[ROF.RHC.value],
-            max_iters=max_iters[ROF.RHC.value],
-            init_state=init_state, curve=True
-        )
-        _, _, fitness_curve_list[threshold][ROF.GA.value] = mlrose_hiive.genetic_alg(
-            problem,
-            max_attempts=max_attempts[ROF.GA.value],
-            max_iters=max_iters[ROF.GA.value],
-            curve=True
-        )
-        _, _, fitness_curve_list[threshold][ROF.MIMIC.value] = mlrose_hiive.mimic(
-            problem, pop_size=mimic_pop_size,
-            max_attempts=max_attempts[ROF.MIMIC.value],
-            max_iters=max_iters[ROF.MIMIC.value],
-            curve=True
-        )
-        print(f"Done with threshold {index}!")
-
-    plt.figure()
-    plt.suptitle(f'Fitness Curve for Varying Thresholds ({name})')
-
-    for index, threshold in enumerate(threshold_range):
-        plt.subplot(3, math.ceil(len(threshold_range) / 3), index + 1)
-        plt.plot(fitness_curve_list[threshold][ROF.SA.value]
-                 [:, 0], label=f'SA, t = {threshold}')
-        plt.plot(fitness_curve_list[threshold][ROF.RHC.value]
-                 [:, 0], label=f'RHC, t = {threshold}')
-        plt.plot(fitness_curve_list[threshold][ROF.GA.value]
-                 [:, 0], label=f'GA, t = {threshold}')
-        plt.plot(fitness_curve_list[threshold][ROF.MIMIC.value]
-                 [:, 0], label=f'MIMIC, t = {threshold}')
-        plt.legend()
-        plt.xlabel('Iterations')
-        plt.ylabel('Fitness')
-
-    plt.savefig(f'images/{"_".join(name.split(" ")).lower()}_threshold.png')
-
-
 def plot_changing_hyper_parameters(
     name: str, problem_length: int,
     max_attempts: list[int], max_iters: list[int]
 ):
-    fitness = mlrose_hiive.ContinuousPeaks(t_pct=0.1)
+    fitness = get_fitness_function(name, 0.1)
     problem = mlrose_hiive.DiscreteOpt(
         length=problem_length, fitness_fn=fitness,
         maximize=True, max_val=2
