@@ -22,11 +22,11 @@ Randomnized Hill Climbing can be summarized as the classic Hill Climbing with re
 
 ### 1.2 Simulated annealing (SA)
 
-Simulated Annealing is an iterative procedure that continuously updates one candidate solution until a termination condition is reached. One can find its root in metalurgy where a piece of metal is heated up to form a speicific shape and cooled down into a minimum-energy crystalline structure that alters the molecule structures. Similarly, SA introduces the concept of Temperature to the optimization process. The higher the temperature, the more likely the algorithm will accept a worse solution, encouraging exploring. The lower the temperature, the less likely the algorithm will accept a worse solution, encouraging exploitation. The algorithm starts with a high temperature and gradually decreases the temperature until the termination condition is reached. The advantage of this algorithm is that it's more likelt to escape local optima than RHC. The disadvantage of it is that it's computationally expensive and requires a lot of memory.
+Simulated Annealing is an iterative procedure that continuously updates one candidate solution until a termination condition is reached. One can find its root in metalurgy where a piece of metal is heated up to form a speicific shape and cooled down into a minimum-energy crystalline structure that alters the molecule structures.[1] Similarly, SA introduces the concept of Temperature to the optimization process. The higher the temperature, the more likely the algorithm will accept a worse solution, encouraging exploring. The lower the temperature, the less likely the algorithm will accept a worse solution, encouraging exploitation. The algorithm starts with a high temperature and gradually decreases the temperature until the termination condition is reached. The advantage of this algorithm is that it's more likelt to escape local optima than RHC. The disadvantage of it is that it's computationally expensive and requires a lot of memory.
 
 ### 1.3 Genetic algorithm (GA)
 
-A genetic algorithm is an iterative procedure that maintains a population of individuals which are candidate solutions to the problem being solved. During each iteration or generation, each individual of the current population is rated for its effectiveness or fitness. Based on these ratings a new population of candidate solutions is formed using specific genetic operators such as cross-over and mutation to replace the population that has been deemed unfit. The loop will keep on going until the termination condition is reached. The advantage of this algorithm is that due to mutation and corss-over, it can explore the input space and find solutions that local search algorithms struggles to find. The disadvantage of it is that it's computationally expensive and may not be a suitable option for complex problems since it's metaheuristic.
+A genetic algorithm is an iterative procedure that maintains a population of individuals which are candidate solutions to the problem being solved. During each iteration or generation, each individual of the current population is rated for its effectiveness or fitness.[1] Based on these ratings a new population of candidate solutions is formed using specific genetic operators such as cross-over and mutation to replace the population that has been deemed unfit. The loop will keep on going until the termination condition is reached. The advantage of this algorithm is that due to mutation and corss-over, it can explore the input space and find solutions that local search algorithms struggles to find. The disadvantage of it is that it's computationally expensive and may not be a suitable option for complex problems since it's metaheuristic.
 
 ### 1.4 Mutual-Information-Maximizing Input Clustering (MIMIC)
 
@@ -36,7 +36,7 @@ MIMIC is an iterative procdure that solves the optimization problem through prob
 
 ### 2.1 Dataset selection and preprocessing
 
-This dataset is from [UCI Machine Learning Repository](https://archive-beta.ics.uci.edu/ml/datasets/breast+cancer+wisconsin+diagnostic).
+This dataset is from [UCI Machine Learning Repository](https://archive-beta.ics.uci.edu/ml/datasets/breast+cancer+wisconsin+diagnostic)[2].
 
 This dataset is relatively small with only 569 rows. According to the description, the data can be seperated by a plane in the 3-dimensional space with the Multisurface Method-Tree. It will be interesting to see how this property affect the classifiers performance.
 
@@ -70,7 +70,7 @@ In Figure 2.2.2 and 2.2.3, the time and accuracy for each algorithm is plotted. 
 
 ### 3.1 Four Peak Problem (FPP)
 
-FPP is a problem with two global optima and two local optima with wide "basins of attraction". It is designed to capture the weakness of RHC and SA for which the chance of finding the global optima is highly dependant on the distribution of the optima. The more robust mathematical representation of the problem can be found in Section 6.1 of _Randomized Local Search as Successive Estimation of Probability Densities_[2] by _Chales L. Isbell Jr. et al._
+FPP is a problem with two global optima and two local optima with wide "basins of attraction". It is designed to capture the weakness of RHC and SA for which the chance of finding the global optima is highly dependant on the distribution of the optima. The more robust mathematical representation of the problem can be found in Section 6.1 of _Randomized Local Search as Successive Estimation of Probability Densities_[3] by _Chales L. Isbell Jr. et al._
 
 ![Figure 3.1.1 Plot of Fitness with Increasing Iteration for All Four Algorithms (SA, RHC, GA & MIMIC)](./assets/four_peaks_iterations.png)
 
@@ -147,6 +147,7 @@ It also has been shown that different optimization problems require different al
 
 ## 5. Reference
 
-- [1] Source: https://archive-beta.ics.uci.edu/ml/datasets/breast+cancer+wisconsin+diagnostic
-- [2] Source: https://www.cc.gatech.edu/~isbell/tutorials/mimic-tutorial.pdf
-- [3] Python Library: https://github.com/hiive/mlrose
+- [1] Source: https://scholar.smu.edu/cgi/viewcontent.cgi?article=1000&context=engineering_compsci_research
+- [2] Source: https://archive-beta.ics.uci.edu/ml/datasets/breast+cancer+wisconsin+diagnostic
+- [3] Source: https://www.cc.gatech.edu/~isbell/tutorials/mimic-tutorial.pdf
+- [4] Python Library: https://github.com/hiive/mlrose
