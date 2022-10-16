@@ -2,7 +2,9 @@
 
 https://github.com/harry-z-kang/CS7461
 
-HW1 is contained in `randomnized_optimization` folder.
+HW2 is contained in `randomnized_optimization` folder.
+
+The report can be found in `report.pdf` but the images and the text may be mismatched because pandoc doesn't know how to preserve order. A better way to read the report is to read the `report.md` file rendered on GitHub.
 
 ## Dependencies
 
