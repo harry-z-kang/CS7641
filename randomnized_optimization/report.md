@@ -62,7 +62,7 @@ On the loss curve of SA algorithm, there are fluctuations before iteration 500 a
 
 Another interesting phenomenon is the loss curve for GA where there are plenty of plateaus on the curve. The clunkyness is likely due to the low learning rate (0.00001) and the property of the genetic algorithm where not every mutation or cross-over moves towards the optima. The loss curve of RHC also demonstrates the low convergence rate due to the dependency on randomness to cover the whole input space.
 
-![Figure 2.2.2 Time Comparison](./images/nn_best_times.png) ![Figure 2.2.3 Accuracy Comparison](./images/nn_best_test_scores.png)
+![Figure 2.2.2 Time Comparison](./assets/nn_best_times.png) ![Figure 2.2.3 Accuracy Comparison](./assets/nn_best_test_scores.png)
 
 In Figure 2.2.2 and 2.2.3, the time and accuracy for each algorithm is plotted. For this particular dataset, the optimized weight from SA, GA and RHC does not outperform the one obtained using backpropagation. One reason for this is that the dataset is relatively small and is known to be linearly sepearable which prevents the neural network from benefiting from the randomized optimization algorithms. The time taken by the randomized optimization algorithms is, however, significantly shorter than the one taken by backpropagation.
 
@@ -72,7 +72,7 @@ In Figure 2.2.2 and 2.2.3, the time and accuracy for each algorithm is plotted. 
 
 FPP is a problem with two global optima and two local optima with wide "basins of attraction". It is designed to capture the weakness of RHC and SA for which the chance of finding the global optima is highly dependant on the distribution of the optima. The more robust mathematical representation of the problem can be found in Section 6.1 of _Randomized Local Search as Successive Estimation of Probability Densities_[2] by _Chales L. Isbell Jr. et al._
 
-![Figure 3.1.1 Plot of Fitness with Increasing Iteration for All Four Algorithms (SA, RHC, GA & MIMIC)](./images/four_peaks_iterations.png)
+![Figure 3.1.1 Plot of Fitness with Increasing Iteration for All Four Algorithms (SA, RHC, GA & MIMIC)](./assets/four_peaks_iterations.png)
 
 The most straight forward criteria of comparison is fitness versus iterations. Figure 3.1.1 shows the relationship of fitness and iterations on a FPP that has a problem size of 100 over 10000 iterations across all 4 algorithms. There's a huge performance difference between RHC/SA and GA/MIMIC. GA and MIMIC are able to achieve their maximum fitness (a.k.a optima) within 1000 iterations but SA and RHC take a lot longer and the optima it achieved is not global optima since it's lower than the optima GA and MIMIC have achieved. This really depictst the problem the FPP problem is trying to capture, namely two global optima and two local optima with wide "basins of attraction" where the SA and RHC algorithms are clearly falling into.
 
@@ -84,11 +84,11 @@ Figure 3.1.2 plotted the four algorithms with different hyperparameters. For SA 
 
 One insteresting thing is the shape of the fitness curve for SA when the temperature decaying function is arithemetic. Rather than completely comverging to a certain, it seems like the algorithm is having second guess with numerous fluctuations cenetered around the global optima. This shows that arithematic teperature decay is too slow and encourages exploring too much. The same behaviour can be observed with FFP and CPP as well.
 
-![Figure 3.1.3 Fitness vs Problem Size for All Four Algorithms](./images/four_peaks_fitness.png)
+![Figure 3.1.3 Fitness vs Problem Size for All Four Algorithms](./assets/four_peaks_fitness.png)
 
 One interesting observation is that although in a broader point of view (e.g. large problem size), SA should have a worse optima found than the MIMIC/GA algorithm, SA actually performs as well as the MIMIC/GA algorithm here. It's likely due to the fact that the problem size is relatively smaller and SA has enough probability for exploring when the temperature is still high. This can also be observed from Figure 3.1.3 where the fitness vs. problem size graph for all 4 algorithms are plotted. SA performs better than RHC when the problem size is small but its performance plummeted when the problem size gets larger and eventually converges to the same curve RHC has.
 
-![Figure 3.1.4 Computation Time vs Problem Size for All Four Algorithms](./images/four_peaks_computation.png)
+![Figure 3.1.4 Computation Time vs Problem Size for All Four Algorithms](./assets/four_peaks_computation.png)
 
 Another important criteria that should be compared is time efficiency between the four algorithms. From Figure 3.1.4, the computation time of MIMIC seems to have an exponential relationship with the problem size and in machine learning expoenential means evil. SA and RHC seems to be taking constant time and GA is taking slightly longer but still constant time.
 
@@ -98,7 +98,7 @@ In conlcusion, considering the time efficiency and the effectiveness of the four
 
 FFP is a problem that counts the number of times of bits alternation in a bit string. A maximum fitness bit string would be one that consists entirely of alternating digits. (i.e. 0b1010101010)
 
-![Figure 3.2.1 Plot of Fitness with Increasing Iteration for All Four Algorithms (SA, RHC, GA & MIMIC)](./images/flip_flop_iterations.png)
+![Figure 3.2.1 Plot of Fitness with Increasing Iteration for All Four Algorithms (SA, RHC, GA & MIMIC)](./assets/flip_flop_iterations.png)
 
 As in Figure 3.2.1, the fitness vs. iteration plot is first presented. GA and MIMIC algorithms are again close to each other. RHC, although finding the optima realtively quickly, is still stuck in the local optima where the fitness is much worse than MIMIC/GA. The SA algorithm performs similar to the MIMIC/GA algorithm within the first 2000 iterations but performs slightly better beyond that. This gain however, is being outweighed by the amount of iterations it takes to achieve.
 
@@ -106,7 +106,7 @@ As in Figure 3.2.1, the fitness vs. iteration plot is first presented. GA and MI
 
 Figure 3.2.2 plotted the four algorithms with different hyperparameters tuned. Just like in FPP, different tuning of the hyperparameters for RHC doesn't really make a difference. For SA, all 3 decay algorithms achieve the same optima but with different speed. Exponential decay achieves the optima with the last amount of iterations and arithmetic, the most. For GA, the optima with different hyperparameters achieved are similar, but from the graph, a mutation probability of 0.3 and population of 200 seems to do the best job. For MIMIC, it's clearly shown that with a higher population and a higher kept percentage, the better the result is. One surprising finding is how few iterations MIMIC takes to achieve the optima (20 iterations). This is likely due to the fact that the property of the FFP provides an easy-to-predict probability distribution and that gives the MIMIC algorithm an upper hand.
 
-![Figure 3.2.3 Computation Time vs Problem Size for All Four Algorithms](./images/flip_flop_computation.png)
+![Figure 3.2.3 Computation Time vs Problem Size for All Four Algorithms](./assets/flip_flop_computation.png)
 
 Last but not least, a computation time vs problem size graph is plotted. Similar pattern is observed compared to FPP, except that the computation time for GA increased significantly when the problem size gets larger. This is likely due to fact that too much cross-over nad mutation actually lowers the possibility for GA to find the optima.
 
@@ -114,9 +114,9 @@ In conlcusion, considering the time efficiency and the effectiveness of the four
 
 ### 3.3 Continuous Peaks Problem (CPP)
 
-CPP is a problem that contains many local optima. In the Euclidian space, the optima can be achieved through moving along the x-axis and the y-axis. However, if the dimension of the input space is higher than the Euclidian space, then the optima should be found on every single dimension. 
+CPP is a problem that contains many local optima. In the Euclidian space, the optima can be achieved through moving along the x-axis and the y-axis. However, if the dimension of the input space is higher than the Euclidian space, then the optima should be found on every single dimension.
 
-![Figure 3.3.1 Plot of Fitness with Increasing Iteration for All Four Algorithms (SA, RHC, GA & MIMIC)](./images/continuous_peak_iterations.png)
+![Figure 3.3.1 Plot of Fitness with Increasing Iteration for All Four Algorithms (SA, RHC, GA & MIMIC)](./assets/continuous_peak_iterations.png)
 
 The first plot to look at is fitness vs iteration plot, as in Figure 3.3.1. This time, MIMIC performs a lot wose than GA. RHC is still stuck in the local optima where the fitness is much worse than MIMIC/GA with a huge margin. This is likely due to the increasing number of local optima which makes it harder to cover the whole input space only depending on randomness. The SA algorithm performs the best in this case. It's likely due to the fact that the SA algorithm is able to explore the input space more efficiently than the other algorithms and more peaks means that there's a higher possibility for SA to achieve the global optima.
 
@@ -124,11 +124,11 @@ The first plot to look at is fitness vs iteration plot, as in Figure 3.3.1. This
 
 The fitness vs iteration plot with hyperparameter tuning, as in Figure 3.3.2 reinforces the observation that GA and SA are performing better than MIMIC and RHC for CPP. For MIMIC, although the algorithm converges within very few iterations, the fitness is still much lower than GA and SA.
 
-![Figure 3.3.3 Computation Time vs Problem Size for All Four Algorithms](./images/continuous_peak_computation.png)
+![Figure 3.3.3 Computation Time vs Problem Size for All Four Algorithms](./assets/continuous_peak_computation.png)
 
 Although GA and SA can yield the same optima result, the time it took each algorithm to get there is very different. GA takes a lot longer than SA to achieve the same optima as shown in Figure 3.3.3. Compared to the time GA took, the SA can find the optima almost in an instant. This is likely due to the fact that GA is a lot more computationally expensive than SA, expecially when the problem is in higher dimension. Additionally, the plot in FIgure 3.3.4 shows that the SA algorithm can consistently yield the result that has the same quality as GA
 
-![Figure 3.3.4 Fitness vs Problem Size for All Four Algorithms](./images/continuous_peak_fitness.png)
+![Figure 3.3.4 Fitness vs Problem Size for All Four Algorithms](./assets/continuous_peak_fitness.png)
 
 In conclusion, SA is the best algorithm to solve this kind of optimization problem. It's able to find the optima in a very short amount of time and it's able to find the global optima in a high dimensional input space.
 
@@ -146,6 +146,7 @@ It also has been shown that different optimization problems require different al
 |   MIMIC   |       Slow       | Resource intensive, Very slow. Good for complex strcuture problems that has no time requirement and require full grasp of input space structure for best outcome |
 
 ## 5. Reference
-[1] Source: https://archive-beta.ics.uci.edu/ml/datasets/breast+cancer+wisconsin+diagnostic
-[2] Source: https://www.cc.gatech.edu/~isbell/tutorials/mimic-tutorial.pdf
-[3] Python Library: https://github.com/hiive/mlrose
+
+- [1] Source: https://archive-beta.ics.uci.edu/ml/datasets/breast+cancer+wisconsin+diagnostic
+- [2] Source: https://www.cc.gatech.edu/~isbell/tutorials/mimic-tutorial.pdf
+- [3] Python Library: https://github.com/hiive/mlrose
