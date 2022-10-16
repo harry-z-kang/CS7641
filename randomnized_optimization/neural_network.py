@@ -32,9 +32,9 @@ target = data["diagnosis"].astype(int)
 
 print("Splitting into train/validation/test sets...", end="")
 FEATURES_TRAIN, FEATURES_TEST, TARGET_TRAIN, TARGET_TEST = train_test_split(
-    features, target, test_size=0.2, random_state=42)
+    features, target, test_size=0.3, random_state=42)
 FEATURES_TRAIN, FEATURES_VAL, TARGET_TRAIN, TARGET_VAL = train_test_split(
-    features, target, test_size=0.2, random_state=42)
+    features, target, test_size=0.3, random_state=42)
 print("Done")
 
 
@@ -156,6 +156,7 @@ def run_optimization(algorithm: OptimizationAlgo, stat: Stats, tuned_param_value
             print("Iteration done!")
 
     plt.figure()
+    print(stat.best_model_fitness)
     try:
       plt.plot(stat.best_model_fitness[:, 0])
     except IndexError:

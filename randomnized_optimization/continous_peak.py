@@ -18,15 +18,6 @@ cf.plot_increasing_iterations(
     mimic_pop_size=500
 )
 
-cf.plot_different_thresholds(
-    name="Continuous Peak",
-    problem_length=85,
-    threshold_range=[0.1, 0.3, 0.5],
-    max_attempts=[1000, 1000, 1000, 1000],
-    max_iters=[700, 700, 700, 700],
-    mimic_pop_size=500
-)
-
 cf.plot_changing_hyper_parameters(
     name="Continuous Peak",
     problem_length=85,

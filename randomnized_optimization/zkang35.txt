@@ -1,0 +1,9 @@
+## GitHub Link
+
+https://github.com/harry-z-kang/CS7461
+
+HW1 is contained in `randomnized_optimization` folder.
+
+## Dependencies
+
+See `requirements.txt`

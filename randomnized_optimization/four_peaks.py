@@ -18,15 +18,6 @@ cf.plot_increasing_iterations(
     mimic_pop_size=500
 )
 
-cf.plot_different_thresholds(
-    name="Four Peaks",
-    problem_length=40,
-    threshold_range=[0.1, 0.3, 0.5],
-    max_attempts=[1000, 1000, 1000, 1000],
-    max_iters=[100000, 100000, 100000, 100000],
-    mimic_pop_size=500
-)
-
 cf.plot_changing_hyper_parameters(
     name="Four Peaks",
     problem_length=40,

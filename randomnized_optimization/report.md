@@ -4,7 +4,7 @@
 
 This study is mainly split into two parts:
 
-1. Applying three randomnized optimization algorithms (randomnized hill climb, simulated annealing, genetic algorithm) to optimize the weights of a neural network on the Wisconsin Breast Cancer dataset.
+1. Applying three randomnized optimization algorithms (randomnized hill climb, simulated annealing, genetic algorithm) to optimize the weights of a neural network on the Wisconsin Breast Cancer dataset[1].
 2. Applied the above three algorithms together with the Mutual-Infotmation-Maximizing Input Clustering (MIMIX) to three classic optimization problems: the Four Peaks Problem (FPP), the Flip Flop Problem (FFP) and the Contiuous Peak Problem (CPP).
 
 As a result, the structure of this reports is as follows:
@@ -46,11 +46,31 @@ The dataset is partitioned into 80% training and 20% testing sets. In this part,
 
 ### 2.2 Implementation of randomized optimization algorithms
 
+From assignment 1, the best learning rate for the neural netwoek with 16 hidden nodes using back propogation is 0.1 which yields a test accuracy score of 99.41% after taking 164.36s of training time. In this section, this configuration of nerual netowrk will be used as the benchmark.
+
+The common search space across all 3 algorithms (SA, GA and RHC) is the learning rate: [0.00001, 0.0001, 0.01, 0.1, 1] and another hyperparameter is chosen for each algorithm. The hyperparameters are as follows:
+
+- RHC: restarts [2, 4, 6, 8, 10] (restart of 2 and learning rate of 0.1 yields the best result)
+- SA: cooling schedule [GeomDecay, ArithDecay, ExpDecay] (using their default parameter) (schedule of ExpDecay and learning rate of 1 yields the best result)
+- GA: population size [20, 50, 100, 200, 500] (population size of 100 and learning rate of 0.00001 yields the best result)
+
+![Figure 2.2.1 Training Loss vs. No. of Iterations (a) Back Propogation (b) Genetic Algorithm (c) Random Hill Climbing (d) Simulated Annealing](./assets/all_loss_curve.png)
+
+In Figure 2.2.1, the loss curve of the best neural network model using all four algorithms (SA, GA, RHC and BP) is plotted. Regarding the convergence rate, GA and BP converges relatively quicker, taking a few hundred iterations but SA and RHC takes more iterations to converge eventually, taking almost 2000 iterations.
+
+On the loss curve of SA algorithm, there are fluctuations before iteration 500 and even an increase in training loss. One possible explanation is that this corresponds to the period of time where the temeperature parameter is high and the algorithm encourages exploring. When the temeprature gets lower (around iteration 300), the convergence rate increases and the loss curve becomes more stable.
+
+Another interesting phenomenon is the loss curve for GA where there are plenty of plateaus on the curve. The clunkyness is likely due to the low learning rate (0.00001) and the property of the genetic algorithm where not every mutation or cross-over moves towards the optima. The loss curve of RHC also demonstrates the low convergence rate due to the dependency on randomness to cover the whole input space.
+
+![Figure 2.2.2 Time Comparison](./images/nn_best_times.png) ![Figure 2.2.3 Accuracy Comparison](./images/nn_best_test_scores.png)
+
+In Figure 2.2.2 and 2.2.3, the time and accuracy for each algorithm is plotted. For this particular dataset, the optimized weight from SA, GA and RHC does not outperform the one obtained using backpropagation. One reason for this is that the dataset is relatively small and is known to be linearly sepearable which prevents the neural network from benefiting from the randomized optimization algorithms. The time taken by the randomized optimization algorithms is, however, significantly shorter than the one taken by backpropagation.
+
 ## 3. Part II: Implementation of four algorithms in three problems
 
 ### 3.1 Four Peak Problem (FPP)
 
-FPP is a problem with two global optima and two local optima with wide "basins of attraction". It is designed to capture the weakness of RHC and SA for which the chance of finding the global optima is highly dependant on the distribution of the optima. The more robust mathematical representation of the problem can be found in Section 6.1 of _Randomized Local Search as Successive Estimation of Probability Densities_[1] by _Chales L. Isbell Jr. et al._
+FPP is a problem with two global optima and two local optima with wide "basins of attraction". It is designed to capture the weakness of RHC and SA for which the chance of finding the global optima is highly dependant on the distribution of the optima. The more robust mathematical representation of the problem can be found in Section 6.1 of _Randomized Local Search as Successive Estimation of Probability Densities_[2] by _Chales L. Isbell Jr. et al._
 
 ![Figure 3.1.1 Plot of Fitness with Increasing Iteration for All Four Algorithms (SA, RHC, GA & MIMIC)](./images/four_peaks_iterations.png)
 
@@ -61,6 +81,8 @@ Another observation is that although MIMIC gets to a better optima, it still has
 ![Figure 3.1.2 Plot of Fitness with Hyperparameter Tuning for All Four Algorithms](./assets/four_peaks_hyperparameter_iterations.png)
 
 Figure 3.1.2 plotted the four algorithms with different hyperparameters. For SA and RHC, the hyperprameter tuning doesn't seem to be really taking effect most likely due to the property of the FPP, although for RHC, a higher number of restarts does seem to be decreasing the iterations it took to reach its optimum. For GA, although it took around the same iterations to achieve the optimum, the fitness is a lot better at iteration 0 with a higher mutation probability and a larger population. This is likely due to the fact that a higher probablity of mutation encourages more exploitation and a larger population size means a higher chance to have godd fitness individuals. For MIMIC, the same pattern as GA can be observed. The fitness score at iteration 0 is lot higher when the population is larger and the kept-percentage is higher. This is likely due to the fact that a larger population size yields more samples and that helps the algorithm to make a better and more precise probability distribution estimate.
+
+One insteresting thing is the shape of the fitness curve for SA when the temperature decaying function is arithemetic. Rather than completely comverging to a certain, it seems like the algorithm is having second guess with numerous fluctuations cenetered around the global optima. This shows that arithematic teperature decay is too slow and encourages exploring too much. The same behaviour can be observed with FFP and CPP as well.
 
 ![Figure 3.1.3 Fitness vs Problem Size for All Four Algorithms](./images/four_peaks_fitness.png)
 
@@ -92,7 +114,7 @@ In conlcusion, considering the time efficiency and the effectiveness of the four
 
 ### 3.3 Continuous Peaks Problem (CPP)
 
-CPP is a problem that contains many local optima. In a 2D world, a better solution can be found by moving to more positive or negative on the x-axis. However, in a high dimensional world, a better solution might be found in all directions at each dimension. Therefore, the difference between randomized optimization and no randomized optimization can be very evident if there are many local optima.
+CPP is a problem that contains many local optima. In the Euclidian space, the optima can be achieved through moving along the x-axis and the y-axis. However, if the dimension of the input space is higher than the Euclidian space, then the optima should be found on every single dimension. 
 
 ![Figure 3.3.1 Plot of Fitness with Increasing Iteration for All Four Algorithms (SA, RHC, GA & MIMIC)](./images/continuous_peak_iterations.png)
 
@@ -111,3 +133,19 @@ Although GA and SA can yield the same optima result, the time it took each algor
 In conclusion, SA is the best algorithm to solve this kind of optimization problem. It's able to find the optima in a very short amount of time and it's able to find the global optima in a high dimensional input space.
 
 ## 4. Conclusions
+
+For the breast cancer dataset, backpropogation seems to be the best algorithm to solve the problem here. However, if there's a time sensitive requirement, other randomnized optimization algorithms can still be considered as they can yield the same result in a much shorter amount of time.
+
+It also has been shown that different optimization problems require different algorithms to solve and the table below summarizes the good and bad traits for each algorithm.
+
+| Algorithm | Computation Time |                                                                      Advantage/Disadvantage                                                                      |
+| :-------: | :--------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|    RHC    |       Fast       |                                          Fast, Simple, Low Resource Cost, but easy to get stuck in basin of attractions                                          |
+|    SA     |       Fast       |                   Fast, Simple, Relatively Higher Resource Cost, but easy to get stuck in basin of attractions, although less likely than RHC                    |
+|    GA     |      Medium      |                            Resource intensive, Faster than MIMIC Good for complex strcuture problems that has loose time requirement                             |
+|   MIMIC   |       Slow       | Resource intensive, Very slow. Good for complex strcuture problems that has no time requirement and require full grasp of input space structure for best outcome |
+
+## 5. Reference
+[1] Source: https://archive-beta.ics.uci.edu/ml/datasets/breast+cancer+wisconsin+diagnostic
+[2] Source: https://www.cc.gatech.edu/~isbell/tutorials/mimic-tutorial.pdf
+[3] Python Library: https://github.com/hiive/mlrose
