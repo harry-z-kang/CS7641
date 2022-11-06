@@ -2,7 +2,7 @@
 
 ## Abstract
 
-In this analysis report, different clustering and dimensionality reduction algorithms will be used to pre-process the data to train neural network and comparison will be made according to the result gained from the supervised learning report. Two clustering algorithms were explored: K-Means and Expectation Maximization (EM) using Gaussian Mixture Model (GMM). Four dimensionality reduction methods were implemented: Principal Component Analysis (PCA), Independent Component Analysis (ICA), Random Projection (RP) and Extra Tree Classifier (ETC). The paper is structured in 3 main sections: Part 1 applies clustering to two datasets, Part 2 & 3 applies dimensionality and re-clustering to two datasets and Part 4 & 5 applies dimensionality and reclustering with neural networks.
+In this analysis report, different clustering and dimensionality reduction algorithms will be used to pre-process the data to train neural network and comparison will be made according to the result gained from the supervised learning report. Two clustering algorithms were explored: K-Means and Expectation Maximization (EM) using Gaussian Mixture Model (GMM). Four dimensionality reduction methods were implemented: Principal Component Analysis (PCA), Independent Component Analysis (ICA), Random Projection (RP) and Extra Tree Classifier (ETC). The paper is structured in 3 main sections: Part 1 applies clustering to two datasets, Part 2 & 3 applies dimensionality and re-clustering to two datasets and Part 4 applies dimensionality and reclustering with neural networks.
 
 ## Datasets
 
