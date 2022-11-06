@@ -4,7 +4,7 @@ https://github.com/harry-z-kang/CS7461
 
 HW3 is contained in `unsupervised_learning` folder.
 
-The report can be found in `report.pdf` but the images and the text may be mismatched because pandoc doesn't know how to preserve order. A better way to read the report is to read the `zkang35-analysis.md` file rendered on GitHub.
+The report can be found in `zkang35-analysis.pdf` but the images and the text may be mismatched because pandoc doesn't know how to preserve order. A better way to read the report is to read the `zkang35-analysis.md` file rendered on GitHub.
 
 ## Dependencies
 
