@@ -40,49 +40,49 @@ The MDP Problem has $n$ states, $S_0, S_1, S_2,...,S_{n-1}$, where each state re
 
 The MDP is first configtured with $S=10$, $r1=4$ and $r2=30$, that is there are 10 states in total, the reward for waiting in the last state is 4 and the reward for cutting in the last state is 30. The discount factor $\gamma$ is set to 0.95. The transition probability $P$ is set to 0.1 by default. Convergence for VI is defined as such that the difference between the value function of the current iteration and the previous iteration is less than $\epsilon \cdot \gamma \cdot (1-\gamma)=0.01*0.05/(1-0.05)=5.26312\cdot 10^{-3}$.
 
-![Figure 3.1 PI & VI Iteration vs Reward 10 4 30 0.95](./assets/forest/PI_VI_Iteration_Reward_10_4_30_0.95.png)
+![Figure 3.1 PI & VI Iteration vs Reward 10 4 30 0.95](./assets/forest/PI_VI_Iteration_reward_10_4_30_0.95.png)
 
-Figure 3.1 shows the change of the value function for each state as the iteration progresses for both PI and VI. For PI, converge happens at iteration 9 and for VI, convergence happens at iteration 69. This supports the observation that PI usually takes less iterations to converge than VI as it takes larger step when iterating in the policy space which guarantees improvement between iterations. The "larger" step is also reflected in the smoothness of the curve. The curve for VI is a lot smoother than that of PI inicating a smaller step interval. However, from the [VI log](./assets/forest/VI_Policy_Migration_10_4_30_0.95.txt), it is interesting to see that the policy extracted from the value function hasn't changed since iteration 8. That shows that to some extent value iteration is less efficient than policy iteration as the majority of the work is for approaching the most optimal value function rather than the policy. After all, value function is just a means to achieve the optima, not the goal itself. Something else that is worth noticing is those large jumps in both diagrams. They both happen when the value function reaches approximately the same value. It almost feels like VI will take several iterations to build up to a major change but PI changes the same amount in one iteration.
+Figure 3.1 shows the change of the value function for each state as the iteration progresses for both PI and VI. For PI, converge happens at iteration 9 and for VI, convergence happens at iteration 69. This supports the observation that PI usually takes less iterations to converge than VI as it takes larger step when iterating in the policy space which guarantees improvement between iterations. The "larger" step is also reflected in the smoothness of the curve. The curve for VI is a lot smoother than that of PI indicating a smaller step interval. However, from the [VI log](./assets/forest/VI_Policy_Migration_10_4_30_0.95.txt), it is interesting to see that the policy extracted from the value function hasn't changed since iteration 8. That shows that to some extent value iteration is less efficient than policy iteration as the majority of the work is for approaching the most optimal value function rather than the policy. After all, value function is just a means to achieve the optima, not the goal itself. Something else that is worth noticing is those large jumps in both diagrams. They both happen when the value function reaches approximately the same value. It almost feels like VI will take several iterations to build up to a major change but PI changes the same amount in one iteration.
 
 The total CPU time for both PI and VI are similar, both hovering around 2ms. This indicates that although PI takes less iteration, every iteration is more expesive computationally.
 
-The graph also depicts the "ripple" effect of states that has a larger reward (sometimes it's the goal). At iteration 0, the reward for all states is 9.75 except for the last state which has the reward of 38.75. This number is determined by the value function initilization. With the current implementation, this is calculated assuming that the discount factor is 0. As the iteration progresses, the value of each state starts to increase as well starting from the state that are closest to the last state.
+The graph also depicts the "ripple" effect of states that has a larger reward (sometimes it's the goal). At iteration 0, the reward for all states is 9.75 except for the last state which has the reward of 38.75. This number is determined by the value function initialization. With the current implementation, this is calculated assuming that the discount factor is 0. As the iteration progresses, the value of each state starts to increase as well starting from the state that are closest to the last state.
 
 This phenomenon is particularly obvious here due to the fact that the last state has a predominantly larger benefit than any other state and $\gamma$ in this configuration is also a large number. This means that the agent will care about future reward indefinitely. When $\gamma$ is smaller, as shown in Figure 3.2 where $\gamma=0.65$, the pattern is still observable but less intense.
 
 ![Figure 3.2 PI Iteration vs Reward 10 4 30 0.65](./assets/forest/PI_Iteration_Reward_10_4_30_0.65.png)
 
 | $\gamma$ | State 0 | State 1 | State 2 | State 3 | State 4 | State 5 | State 6 | State 7 | State 8 | State 9 |
-| :------: | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: |
-|   0.05   |    0    |    1    |    1    |    1    |    1    |    1    |    1    |    1    |    0    |    1    |
-|   0.15   |    0    |    1    |    1    |    1    |    1    |    1    |    1    |    1    |    0    |    1    |
-|   0.25   |    0    |    1    |    1    |    1    |    1    |    1    |    1    |    0    |    0    |    1    |
-|   0.35   |    0    |    1    |    1    |    1    |    1    |    1    |    1    |    0    |    0    |    1    |
-|   0.45   |    0    |    1    |    1    |    1    |    1    |    1    |    0    |    0    |    0    |    1    |
-|   0.55   |    0    |    1    |    1    |    1    |    1    |    0    |    0    |    0    |    0    |    1    |
-|   0.65   |    0    |    1    |    1    |    1    |    0    |    0    |    0    |    0    |    0    |    1    |
-|   0.75   |    0    |    1    |    0    |    0    |    0    |    0    |    0    |    0    |    0    |    1    |
-|   0.85   |    0    |    0    |    0    |    0    |    0    |    0    |    0    |    0    |    0    |    1    |
-|   0.95   |    0    |    0    |    0    |    0    |    0    |    0    |    0    |    0    |    0    |    1    |
+|:--------:|:-------:|:-------:|:-------:|:-------:|:-------:|:-------:|:-------:|:-------:|:-------:|:-------:|
+| 0.05     | 0       | 1       | 1       | 1       | 1       | 1       | 1       | 1       | 0       | 1       |
+| 0.15     | 0       | 1       | 1       | 1       | 1       | 1       | 1       | 1       | 0       | 1       |
+| 0.25     | 0       | 1       | 1       | 1       | 1       | 1       | 1       | 0       | 0       | 1       |
+| 0.35     | 0       | 1       | 1       | 1       | 1       | 1       | 1       | 0       | 0       | 1       |
+| 0.45     | 0       | 1       | 1       | 1       | 1       | 1       | 0       | 0       | 0       | 1       |
+| 0.55     | 0       | 1       | 1       | 1       | 1       | 0       | 0       | 0       | 0       | 1       |
+| 0.65     | 0       | 1       | 1       | 1       | 0       | 0       | 0       | 0       | 0       | 1       |
+| 0.75     | 0       | 1       | 0       | 0       | 0       | 0       | 0       | 0       | 0       | 1       |
+| 0.85     | 0       | 0       | 0       | 0       | 0       | 0       | 0       | 0       | 0       | 1       |
+| 0.95     | 0       | 0       | 0       | 0       | 0       | 0       | 0       | 0       | 0       | 1       |
 
 Table 3.1 above captures how the policy changes as $\gamma$ increases. The policy is represented by a 1-D array where each element represents the action for each state. The policy for $\gamma=0.05$ is to cut at every state except for state 8 and state 0. As $\gamma$ increases, the policy becomes more conservative and only cuts at the last state. This is becasue when $\gamma$ is close to 0 , the agent will try to maximize the immediate reward. In this case, for State 1-7, the only way to earn reward is to cut. For State 8, the situation is a bit different. Although the agent will only receive 0.05 of the utility for cutting when reaching next state, it's still better than the 1-point reward when cutting right now. As a result, the agent chooses to wait at State 8. As $\gamma$ increases, the agent will care more about future reward and is more likely to wait until the last state to earn the big bonus.
 
 However, the results changed when the reward for cutting in the last state is reduced to 2 and the reward for waiting in the last state is increased to 10. Table 3.2 below shows the policy for different $\gamma$.
 
 | $\gamma$ | State 0 | State 1 | State 2 | State 3 | State 4 | State 5 | State 6 | State 7 | State 8 | State 9 |
-| :------: | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: |
-|   0.05   |    0    |    1    |    1    |    1    |    1    |    1    |    1    |    1    |    1    |    0    |
-|   0.15   |    0    |    1    |    1    |    1    |    1    |    1    |    1    |    1    |    0    |    0    |
-|   0.25   |    0    |    1    |    1    |    1    |    1    |    1    |    1    |    1    |    0    |    0    |
-|   0.35   |    0    |    1    |    1    |    1    |    1    |    1    |    1    |    0    |    0    |    0    |
-|   0.45   |    0    |    1    |    1    |    1    |    1    |    1    |    1    |    0    |    0    |    0    |
-|   0.55   |    0    |    1    |    1    |    1    |    1    |    1    |    0    |    0    |    0    |    0    |
-|   0.65   |    0    |    1    |    1    |    1    |    0    |    0    |    0    |    0    |    0    |    0    |
-|   0.75   |    0    |    1    |    0    |    0    |    0    |    0    |    0    |    0    |    0    |    0    |
-|   0.85   |    0    |    0    |    0    |    0    |    0    |    0    |    0    |    0    |    0    |    0    |
-|   0.95   |    0    |    0    |    0    |    0    |    0    |    0    |    0    |    0    |    0    |    0    |
+|:--------:|:-------:|:-------:|:-------:|:-------:|:-------:|:-------:|:-------:|:-------:|:-------:|:-------:|
+| 0.05     | 0       | 1       | 1       | 1       | 1       | 1       | 1       | 1       | 1       | 0       |
+| 0.15     | 0       | 1       | 1       | 1       | 1       | 1       | 1       | 1       | 0       | 0       |
+| 0.25     | 0       | 1       | 1       | 1       | 1       | 1       | 1       | 1       | 0       | 0       |
+| 0.35     | 0       | 1       | 1       | 1       | 1       | 1       | 1       | 0       | 0       | 0       |
+| 0.45     | 0       | 1       | 1       | 1       | 1       | 1       | 1       | 0       | 0       | 0       |
+| 0.55     | 0       | 1       | 1       | 1       | 1       | 1       | 0       | 0       | 0       | 0       |
+| 0.65     | 0       | 1       | 1       | 1       | 0       | 0       | 0       | 0       | 0       | 0       |
+| 0.75     | 0       | 1       | 0       | 0       | 0       | 0       | 0       | 0       | 0       | 0       |
+| 0.85     | 0       | 0       | 0       | 0       | 0       | 0       | 0       | 0       | 0       | 0       |
+| 0.95     | 0       | 0       | 0       | 0       | 0       | 0       | 0       | 0       | 0       | 0       |
 
-The first noteable change is that for all values of $\gamma$, the agent chooses to wait for State 9. This makes sense since the reward for waiting outweighs that of cutting. The second difference is the policy for State 8. Unlike in the previous configuration where the agent choice is consistent with different $\gamma$ value, the agent has a different policy mapping when $\gamma=0.05$. This is because the reward for waiting at State 9 is not large enough to outweigh the reward for cutting at State 8. If the reward is increased to 30 just like the previous configuration, the agent will choose to wait for State 8 as well. This detail here shows how the agent's policy is affected by the reward structure.
+The first notable change is that for all values of $\gamma$, the agent chooses to wait for State 9. This makes sense since the reward for waiting outweighs that of cutting. The second difference is the policy for State 8. Unlike in the previous configuration where the agent choice is consistent with different $\gamma$ value, the agent has a different policy mapping when $\gamma=0.05$. This is because the reward for waiting at State 9 is not large enough to outweigh the reward for cutting at State 8. If the reward is increased to 30 just like the previous configuration, the agent will choose to wait for State 8 as well. This detail here shows how the agent's policy is affected by the reward structure.
 
 To explore the effect of the number of states on the agent's policy for both PI and VI, the configuration is changed again with number of states increasing from 10 to 1000.
 
@@ -100,7 +100,7 @@ Figure 3.4 captures how the the value function changes with respect to iteration
 
 Overall, Q-Learning actually performs a lot worse than PI & VI. Although the number of iteration is set to 1,000,000, Q-Learning hardly reaches the most optimal policy mapping according to the result of PI & VI and this is under the configuration where the learning rate $\alpha$ is set to 1 with a decaying rate of 0.99 and $\epsilon$ is set to 0.95 with a decaying rate of 0.999.
 
-One possible reason is that the random seed that is chosen here just happen to genearte some erratic data, but another reason that is more likely is that the reward structure is not designed well. The reward for most states (all states except the last state) are exactly the same and there is only 1 way the "ripple" effect can propogate (i.e. $S_{n-1} \Rightarrow S_{n-2} \Rightarrow ... \Rightarrow S_0$). This is particularly harsh on Q-Learning as it does not and can not take advantage of the exploitation aspect of Q-Learning to find the best action. This can partially explain why Q-learning is updating the Q-value and is heading the correct direction but in a very slow fashion as shown in the [log](./assets/forest/QL_Epsilon_Policy_Migration_10_4_30_0.95.txt).
+One possible reason is that the random seed that is chosen here just happen to generate some erratic data, but another reason that is more likely is that the reward structure is not designed well. The reward for most states (all states except the last state) are exactly the same and there is only 1 way the "ripple" effect can prorogate (i.e. $S_{n-1} \Rightarrow S_{n-2} \Rightarrow ... \Rightarrow S_0$). This is particularly harsh on Q-Learning as it does not and can not take advantage of the exploitation aspect of Q-Learning to find the best action. This can partially explain why Q-learning is updating the Q-value and is heading the correct direction but in a very slow fashion as shown in the [log](./assets/forest/QL_Epsilon_Policy_Migration_10_4_30_0.95.txt).
 
 ## Frozen Lake
 
@@ -115,7 +115,7 @@ The comparison between PI and VI for the frozen lake problem largely follows wha
 ![Figure 4.1](./assets/frozen_lake/PI_VI_Gamma_ExecutionTime_20.png)
 ![Figure 4.2](./assets/frozen_lake/PI_VI_Gamma_Iteration_20.png)
 
-Figure 4.1 captures the execution time of PI and VI with respect to $\gamma$ where the relationship can be modeled as an exponential equation. This observation largely follows the iteration vs $\gamma$ plot in Figure 4.2. This is largely due to the fact that a large discount factor means the agent will care more about the future reward indefinitely and thus it takes a lot longer for the reward at the goal to propogate to the rest of the states.
+Figure 4.1 captures the execution time of PI and VI with respect to $\gamma$ where the relationship can be modeled as an exponential equation. This observation largely follows the iteration vs $\gamma$ plot in Figure 4.2. This is largely due to the fact that a large discount factor means the agent will care more about the future reward indefinitely and thus it takes a lot longer for the reward at the goal to propagate to the rest of the states.
 
 Since the frozen lake problem is a grid world, it's a lot easier to visualize.
 
@@ -139,4 +139,5 @@ Although not enough information is gathered to make a conclusion, some observati
 A more thorough run was conducted with all different combincation of $\epsilon$, $\epsilon$-decay, $\gamma$ and $\alpha$ values[1]. The result is shown in [10*10 Frozen Lake](./assets/frozen_lake_grid.csv) and [20*20 Frozen Lake](./assets/large_frozen_lake_grid.csv) and the only finding here is that initializing the Q-table with a non-zero value can help the algorithm converge faster and mitigate this problem.
 
 ## Reference
+
 [1] Source code from https://github.com/cmaron/CS-7641-assignments/tree/master/assignment4
