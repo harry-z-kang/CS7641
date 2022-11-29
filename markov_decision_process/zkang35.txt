@@ -4,7 +4,7 @@ https://github.com/harry-z-kang/CS7461
 
 HW3 is contained in `markov_decision_process` folder.
 
-The report can be found in `zkang35-analysis.pdf`, but the report should be rendered the best on GitHub.
+The report can be found in `zkang35-analysis.pdf`, but the report should be rendered the best on GitHub from the `zkang35-analysis.md` file.
 
 * Part of the code for the Frozen Lake Problem is directly from https://github.com/cmaron/CS-7641-assignments/tree/master/assignment4. The instruction of how to run that code can also be found following that URL. 
 
